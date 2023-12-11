@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using VirtualDeviants.Saving;
 using VirtualDeviants.Saving.Snapshot;
 
@@ -60,7 +61,10 @@ namespace VirtualDeviants {
         private IEnumerator SaveGameAsync(string id) {
             SetLoading(true);
 
-            Task<SnapshotTable> updatedSnapshotTable = SaveSystem.SaveGame(id);
+            Save save = new Save();
+            SaveSystem.WriteSaveData(save);
+            
+            Task<SnapshotTable> updatedSnapshotTable = SaveSystem.SaveGame(save, id);
             while (!updatedSnapshotTable.IsCompleted) yield return null;
 
             yield return InstantiateSnapshotRows(updatedSnapshotTable.Result);
@@ -77,7 +81,11 @@ namespace VirtualDeviants {
         {
             SetLoading(true);
             
-            yield return SaveSystem.LoadGame(id);
+            Task<Save> save = SaveSystem.LoadGame(id);
+            while (!save.IsCompleted) yield return null;
+            
+            Save.AssignPendingSave(save.Result);
+            SceneManager.LoadScene("SampleScene");
             
             SetLoading(false);
         }

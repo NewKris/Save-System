@@ -10,6 +10,12 @@ namespace VirtualDeviants.Saving {
     {
         private static HashSet<ISaveEndpoint> SaveEndpoints = new HashSet<ISaveEndpoint>();
 
+        public static void WriteSaveData(Save save)
+        {
+            foreach (ISaveEndpoint saveEndpoint in SaveEndpoints)
+                saveEndpoint.WriteData(save);
+        }
+        
         public static void RegisterEndpoint(ISaveEndpoint endpoint)
         {
             if (SaveEndpoints == null)
@@ -24,12 +30,7 @@ namespace VirtualDeviants.Saving {
                 SaveEndpoints.Remove(endpoint);
         }
         
-        public static async Task<SnapshotTable> SaveGame(string id) {
-            Save save = new Save();
-            foreach (ISaveEndpoint saveEndpoint in SaveEndpoints) {
-                saveEndpoint.WriteData(save);
-            }
-
+        public static async Task<SnapshotTable> SaveGame(Save save, string id) {
             string path = SaveSystemConfig.SaveFilePath + id;
             
             FileManager.CreateDirectory(SaveSystemConfig.SaveFilePath);
@@ -48,12 +49,9 @@ namespace VirtualDeviants.Saving {
             return snapshotTable;
         }
 
-        public static async Task LoadGame(string id) {
+        public static async Task<Save> LoadGame(string id) {
             string path = SaveSystemConfig.SaveFilePath + id;
-            Save save = await FileManager.DeserializeFile<Save>(path);
-            Save.AssignPendingSave(save);
-            
-            SceneManager.LoadScene(SaveSystemConfig.GameplayScene);
+            return await FileManager.DeserializeFile<Save>(path);
         }
 
         public static async Task<SnapshotTable> DeleteSaveFile(string id) {
