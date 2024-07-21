@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using VirtualDeviants.Saving;
 
-namespace VirtualDeviants.Saving {
+namespace VirtualDeviants {
     
     [CreateAssetMenu(menuName = "Default Save")]
     public class DefaultSave : ScriptableObject {
-        public Save save;
+        public SaveData save;
     }
 }

@@ -12,6 +12,7 @@ namespace VirtualDeviants {
         public GameObject createNewSaveButton;
         public GameObject snapshotContainer;
         public GameObject snapshotPrefab;
+        public Mock mock;
 
         public void CreateNewSave() {
             string id = Guid.NewGuid().ToString();
@@ -61,8 +62,9 @@ namespace VirtualDeviants {
         private IEnumerator SaveGameAsync(string id) {
             SetLoading(true);
 
-            Save save = new Save();
-            SaveSystem.WriteSaveData(save);
+            SaveData save = new SaveData() {
+                score = mock.Score
+            };
             
             Task<SnapshotTable> updatedSnapshotTable = SaveSystem.SaveGame(save, id);
             while (!updatedSnapshotTable.IsCompleted) yield return null;
@@ -72,24 +74,24 @@ namespace VirtualDeviants {
             SetLoading(false);
         }
 
-        private void LoadGame(string id)
-        {
+        private void LoadGame(string id) {
             StartCoroutine(LoadGameAsync(id));
         }
 
-        private IEnumerator LoadGameAsync(string id)
-        {
+        private IEnumerator LoadGameAsync(string id) {
             SetLoading(true);
+
+            yield return LoadSaveData(id);
             
-            Task<Save> save = SaveSystem.LoadGame(id);
-            while (!save.IsCompleted) yield return null;
-            
-            Save.AssignPendingSave(save.Result);
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene(0);
             
             SetLoading(false);
         }
 
+        private async Task LoadSaveData(string id) {
+            SaveData.activeSave = await SaveSystem.LoadGame<SaveData>(id);
+        }
+        
         private void DeleteSave(string id) {
             StartCoroutine(DeleteSaveAsync(id));
         }

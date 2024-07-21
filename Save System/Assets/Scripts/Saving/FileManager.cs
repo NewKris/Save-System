@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace VirtualDeviants.Saving {
-    public static class FileManager {
+    internal static class FileManager {
         private const string FILE_TYPE = ".json";
         
         private static string GamePath {
