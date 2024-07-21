@@ -6,16 +6,39 @@ using UnityEngine.SceneManagement;
 using VirtualDeviants.Saving.Snapshot;
 
 namespace VirtualDeviants.Saving {
-    public static class SaveSystem {
+    public static class SaveSystem
+    {
+        private static HashSet<ISaveEndpoint> SaveEndpoints = new HashSet<ISaveEndpoint>();
+
+        public static void WriteSaveData(Save save)
+        {
+            foreach (ISaveEndpoint saveEndpoint in SaveEndpoints)
+                saveEndpoint.WriteData(save);
+        }
+        
+        public static void RegisterEndpoint(ISaveEndpoint endpoint)
+        {
+            if (SaveEndpoints == null)
+                SaveEndpoints = new HashSet<ISaveEndpoint>() { endpoint };
+            else
+                SaveEndpoints.Add(endpoint);
+        }
+
+        public static void UnregisterEndpoint(ISaveEndpoint endpoint)
+        {
+            if (SaveEndpoints.Contains(endpoint))
+                SaveEndpoints.Remove(endpoint);
+        }
+        
         public static async Task<SnapshotTable> SaveGame(Save save, string id) {
-            string path = SaveSystemConfig.SAVE_FILE_PATH + id;
+            string path = SaveSystemConfig.SaveFilePath + id;
             
-            FileManager.CreateDirectory(SaveSystemConfig.SAVE_FILE_PATH);
+            FileManager.CreateDirectory(SaveSystemConfig.SaveFilePath);
             await FileManager.SerializeFile(save, path);
 
             SnapshotTable snapshotTable = await FetchSnapshot();
 
-            int i = snapshotTable.GetIndex(id);
+            int i = snapshotTable.snapshots.FindIndex(snapshot => string.Equals(snapshot.id, id));
             if (i != -1) snapshotTable.snapshots.RemoveAt(i);
             
             SnapshotInfo newSnapshot = SnapshotFactory.CreateNewSnapshot(id);
@@ -26,38 +49,37 @@ namespace VirtualDeviants.Saving {
             return snapshotTable;
         }
 
-        public static async Task<T> LoadGame<T>(string id) {
-            string path = SaveSystemConfig.SAVE_FILE_PATH + id;
-            return await FileManager.DeserializeFile<T>(path);
+        public static async Task<Save> LoadGame(string id) {
+            string path = SaveSystemConfig.SaveFilePath + id;
+            return await FileManager.DeserializeFile<Save>(path);
         }
 
         public static async Task<SnapshotTable> DeleteSaveFile(string id) {
-            string path = SaveSystemConfig.SAVE_FILE_PATH + id;
+            string path = SaveSystemConfig.SaveFilePath + id;
             FileManager.DeleteFile(path);
 
             SnapshotTable snapshotTable = await FetchSnapshot();
-            int i = snapshotTable.GetIndex(id);
+            int i = snapshotTable.snapshots.FindIndex(snapshot => string.Equals(snapshot.id, id));
             
             if (i != -1) snapshotTable.snapshots.RemoveAt(i);
 
             await UpdateSnapshot(snapshotTable);
-            
             return snapshotTable;
         }
 
         public static async Task<SnapshotTable> FetchSnapshot() {
-            SnapshotTable snapshotTable = await FileManager.DeserializeFile<SnapshotTable>(SaveSystemConfig.SAVE_FILE_SNAPSHOT_PATH);
+            SnapshotTable snapshotTable = await FileManager.DeserializeFile<SnapshotTable>(SaveSystemConfig.SaveFileSnapshotPath);
 
             if (snapshotTable != null) return snapshotTable;
             
             snapshotTable = new SnapshotTable();
-            await FileManager.SerializeFile(snapshotTable, SaveSystemConfig.SAVE_FILE_SNAPSHOT_PATH);
+            await FileManager.SerializeFile(snapshotTable, SaveSystemConfig.SaveFileSnapshotPath);
 
             return snapshotTable;
         }
 
         private static async Task UpdateSnapshot(SnapshotTable snapshotTable) {
-            await FileManager.SerializeFile(snapshotTable, SaveSystemConfig.SAVE_FILE_SNAPSHOT_PATH);
+            await FileManager.SerializeFile(snapshotTable, SaveSystemConfig.SaveFileSnapshotPath);
         }
     }
 }

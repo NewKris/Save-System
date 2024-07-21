@@ -11,24 +11,27 @@ namespace VirtualDeviants {
         private int _score;
         
         public int Score {
-            get => _score;
+            get {
+                return _score;
+            }
             private set {
                 _score = value;
                 display.UpdateDisplay(_score);
             }
         }
-        
+
+        private void Start()
+        {
+            Save save = Save.PopPendingSave() ?? defaultSave.save;
+            Score = save.score;
+        }
+
         public void IncreaseScore() {
             Score++;
         }
 
         public void DecreaseScore() {
             Score--;
-        }
-
-        private void Start() {
-            SaveData save = SaveData.activeSave ?? defaultSave.save;
-            Score = save.score;
         }
     }
 }

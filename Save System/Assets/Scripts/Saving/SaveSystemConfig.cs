@@ -1,6 +1,8 @@
-﻿namespace VirtualDeviants.Saving {
-    internal static class SaveSystemConfig {
-        public const string SAVE_FILE_PATH = "/Saves/";
-        public const string SAVE_FILE_SNAPSHOT_PATH = "/snapshot";
+﻿namespace VirtualDeviants.Saving
+{
+    public static class SaveSystemConfig
+    {
+        public const string SaveFilePath = "/Saves/";
+        public const string SaveFileSnapshotPath = "/snapshot.json";
     }
 }
