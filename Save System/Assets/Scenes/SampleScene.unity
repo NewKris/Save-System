@@ -1250,7 +1250,6 @@ GameObject:
   - component: {fileID: 1215170509}
   - component: {fileID: 1215170508}
   - component: {fileID: 1215170512}
-  - component: {fileID: 1215170513}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1358,19 +1357,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultSave: {fileID: 11400000, guid: 21f9209c991060b4bb900014792a1f2e, type: 2}
   display: {fileID: 1460259622}
---- !u!114 &1215170513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1215170507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8e659ef9a504000bd7f98d70cf7e366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mock: {fileID: 1215170512}
 --- !u!1 &1285470264
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,6 +2545,7 @@ MonoBehaviour:
   createNewSaveButton: {fileID: 452180596}
   snapshotContainer: {fileID: 2079441606}
   snapshotPrefab: {fileID: 3560586741188521958, guid: 5a9524b1e86fc6345827b159999e4095, type: 3}
+  mock: {fileID: 1215170512}
 --- !u!1 &2040584678
 GameObject:
   m_ObjectHideFlags: 0
