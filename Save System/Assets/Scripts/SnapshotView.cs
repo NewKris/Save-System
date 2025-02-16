@@ -17,7 +17,7 @@ namespace VirtualDeviants {
         
         public void Initialize(SnapshotViewConfig config) {
             idText.text = config.id;
-            dateText.text = config.date;
+            dateText.text = DateTime.FromFileTimeUtc(config.date).ToString("F");
             
             saveButton.onClick.AddListener(() => config.onSaveCallback(config.id));
             loadButton.onClick.AddListener(() => config.onLoadCallback(config.id));
@@ -27,7 +27,7 @@ namespace VirtualDeviants {
 
     public struct SnapshotViewConfig {
         public string id;
-        public string date;
+        public long date;
         public Action<string> onLoadCallback;
         public Action<string> onSaveCallback;
         public Action<string> onDeleteCallback;

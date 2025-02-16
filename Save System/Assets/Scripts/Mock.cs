@@ -4,18 +4,22 @@ using UnityEngine;
 using VirtualDeviants.Saving;
 
 namespace VirtualDeviants {
-    public class Mock : MonoBehaviour {
+    public class Mock : MonoBehaviour, ISaveDataEndpoint {
         public DefaultSave defaultSave;
         public ScoreDisplay display;
 
         private int _score;
         
-        public int Score {
+        private int Score {
             get => _score;
-            private set {
+            set {
                 _score = value;
                 display.UpdateDisplay(_score);
             }
+        }
+        
+        public void WriteDataToSave(Save save) {
+            save.score = Score;
         }
         
         public void IncreaseScore() {
@@ -27,8 +31,13 @@ namespace VirtualDeviants {
         }
 
         private void Start() {
-            SaveData save = SaveData.activeSave ?? defaultSave.save;
+            Save save = Save.activeSave ?? defaultSave.save;
             Score = save.score;
+            SaveFactory.RegisterEndpoint(this);
+        }
+
+        private void OnDestroy() {
+            SaveFactory.UnRegisterEndpoint(this);
         }
     }
 }

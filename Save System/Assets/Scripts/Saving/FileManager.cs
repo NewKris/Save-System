@@ -1,11 +1,11 @@
 ﻿using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
 namespace VirtualDeviants.Saving {
     internal static class FileManager {
         private const string FILE_TYPE = ".json";
+        private const string META_EXTENSION = ".meta";
         
         private static string GamePath {
             get {
@@ -42,9 +42,14 @@ namespace VirtualDeviants.Saving {
 
         public static void DeleteFile(string localPath) {
             string absolutePath = GamePath + localPath + FILE_TYPE;
+            string absoluteMetaPath = GamePath + localPath + FILE_TYPE + META_EXTENSION;
 
             if (File.Exists(absolutePath)) {
                 File.Delete(absolutePath);
+            }
+
+            if (File.Exists(absoluteMetaPath)) {
+                File.Delete(absoluteMetaPath);
             }
             
             UpdateFileSystem();

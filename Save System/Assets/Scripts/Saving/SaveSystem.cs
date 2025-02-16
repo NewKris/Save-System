@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using System.Threading.Tasks;
 using VirtualDeviants.Saving.Snapshot;
 
 namespace VirtualDeviants.Saving {
@@ -13,7 +9,7 @@ namespace VirtualDeviants.Saving {
             FileManager.CreateDirectory(SaveSystemConfig.SAVE_FILE_PATH);
             await FileManager.SerializeFile(save, path);
 
-            SnapshotTable snapshotTable = await FetchSnapshot();
+            SnapshotTable snapshotTable = await FetchSnapshots();
 
             int i = snapshotTable.GetIndex(id);
             if (i != -1) snapshotTable.snapshots.RemoveAt(i);
@@ -35,7 +31,7 @@ namespace VirtualDeviants.Saving {
             string path = SaveSystemConfig.SAVE_FILE_PATH + id;
             FileManager.DeleteFile(path);
 
-            SnapshotTable snapshotTable = await FetchSnapshot();
+            SnapshotTable snapshotTable = await FetchSnapshots();
             int i = snapshotTable.GetIndex(id);
             
             if (i != -1) snapshotTable.snapshots.RemoveAt(i);
@@ -45,7 +41,7 @@ namespace VirtualDeviants.Saving {
             return snapshotTable;
         }
 
-        public static async Task<SnapshotTable> FetchSnapshot() {
+        public static async Task<SnapshotTable> FetchSnapshots() {
             SnapshotTable snapshotTable = await FileManager.DeserializeFile<SnapshotTable>(SaveSystemConfig.SAVE_FILE_SNAPSHOT_PATH);
 
             if (snapshotTable != null) return snapshotTable;

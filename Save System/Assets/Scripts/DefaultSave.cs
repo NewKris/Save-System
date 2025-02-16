@@ -5,6 +5,6 @@ namespace VirtualDeviants {
     
     [CreateAssetMenu(menuName = "Default Save")]
     public class DefaultSave : ScriptableObject {
-        public SaveData save;
+        public Save save;
     }
 }

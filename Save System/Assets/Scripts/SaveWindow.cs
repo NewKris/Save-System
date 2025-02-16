@@ -26,7 +26,7 @@ namespace VirtualDeviants {
         private IEnumerator LoadSnapshot() {
             SetLoading(true);
             
-            Task<SnapshotTable> snapShotTableTask = SaveSystem.FetchSnapshot();
+            Task<SnapshotTable> snapShotTableTask = SaveSystem.FetchSnapshots();
             while (!snapShotTableTask.IsCompleted) yield return null;
 
             yield return InstantiateSnapshotRows(snapShotTableTask.Result);
@@ -62,9 +62,7 @@ namespace VirtualDeviants {
         private IEnumerator SaveGameAsync(string id) {
             SetLoading(true);
 
-            SaveData save = new SaveData() {
-                score = mock.Score
-            };
+            Save save = SaveFactory.CreateSave(); 
             
             Task<SnapshotTable> updatedSnapshotTable = SaveSystem.SaveGame(save, id);
             while (!updatedSnapshotTable.IsCompleted) yield return null;
@@ -89,7 +87,7 @@ namespace VirtualDeviants {
         }
 
         private async Task LoadSaveData(string id) {
-            SaveData.activeSave = await SaveSystem.LoadGame<SaveData>(id);
+            Save.activeSave = await SaveSystem.LoadGame<Save>(id);
         }
         
         private void DeleteSave(string id) {
