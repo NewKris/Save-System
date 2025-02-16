@@ -2,20 +2,20 @@ using System.Collections.Generic;
 
 namespace VirtualDeviants.Manual_Saving.Saving {
     public static class SaveFactory {
-        private static readonly HashSet<ISaveDataEndpoint> Endpoints = new HashSet<ISaveDataEndpoint>();
+        private static readonly HashSet<ISaveDataProvider> Endpoints = new HashSet<ISaveDataProvider>();
 
-        public static void RegisterEndpoint(ISaveDataEndpoint endpoint) {
-            Endpoints.Add(endpoint);
+        public static void RegisterEndpoint(ISaveDataProvider provider) {
+            Endpoints.Add(provider);
         }
 
-        public static void UnRegisterEndpoint(ISaveDataEndpoint endpoint) {
-            Endpoints.Remove(endpoint);
+        public static void UnRegisterEndpoint(ISaveDataProvider provider) {
+            Endpoints.Remove(provider);
         }
         
         public static Save CreateSave() {
             Save newSave = new Save();
 
-            foreach (ISaveDataEndpoint saveDataEndpoint in Endpoints) {
+            foreach (ISaveDataProvider saveDataEndpoint in Endpoints) {
                 saveDataEndpoint.WriteDataToSave(newSave);
             }
             

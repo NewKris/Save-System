@@ -2,7 +2,7 @@
 using VirtualDeviants.Manual_Saving.Saving;
 
 namespace VirtualDeviants.Manual_Saving {
-    public class Mock : MonoBehaviour, ISaveDataEndpoint {
+    public class Mock : MonoBehaviour, ISaveDataProvider {
         public DefaultSave defaultSave;
         public ScoreDisplay display;
 

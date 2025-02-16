@@ -1,5 +1,5 @@
 namespace VirtualDeviants.Manual_Saving.Saving {
-    public interface ISaveDataEndpoint {
+    public interface ISaveDataProvider {
         public void WriteDataToSave(Save save);
     }
 }
