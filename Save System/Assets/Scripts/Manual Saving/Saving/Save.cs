@@ -1,6 +1,6 @@
 using System;
 
-namespace VirtualDeviants.Saving {
+namespace VirtualDeviants.Manual_Saving.Saving {
 
     [Serializable]
     public class Save {

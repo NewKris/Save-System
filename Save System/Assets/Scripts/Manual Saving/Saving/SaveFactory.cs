@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace VirtualDeviants.Saving {
+namespace VirtualDeviants.Manual_Saving.Saving {
     public static class SaveFactory {
         private static readonly HashSet<ISaveDataEndpoint> Endpoints = new HashSet<ISaveDataEndpoint>();
 

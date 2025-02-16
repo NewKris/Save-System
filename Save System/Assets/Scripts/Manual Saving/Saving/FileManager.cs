@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace VirtualDeviants.Saving {
+namespace VirtualDeviants.Manual_Saving.Saving {
     internal static class FileManager {
         private const string FILE_TYPE = ".json";
         private const string META_EXTENSION = ".meta";

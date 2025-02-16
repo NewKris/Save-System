@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace VirtualDeviants {
+namespace VirtualDeviants.Manual_Saving {
     public class SnapshotView : MonoBehaviour {
         [Header("Text")]
         public TextMeshProUGUI idText;

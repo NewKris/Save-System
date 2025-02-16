@@ -3,10 +3,10 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using VirtualDeviants.Saving;
-using VirtualDeviants.Saving.Snapshot;
+using VirtualDeviants.Manual_Saving.Saving;
+using VirtualDeviants.Manual_Saving.Saving.Snapshot;
 
-namespace VirtualDeviants {
+namespace VirtualDeviants.Manual_Saving {
     public class SaveWindow : MonoBehaviour {
         public GameObject loadingSpinner;
         public GameObject createNewSaveButton;

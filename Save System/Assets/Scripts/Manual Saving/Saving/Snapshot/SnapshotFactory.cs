@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VirtualDeviants.Saving.Snapshot {
+namespace VirtualDeviants.Manual_Saving.Saving.Snapshot {
     internal static class SnapshotFactory {
         public static SnapshotInfo CreateNewSnapshot(string id) {
             return new SnapshotInfo() {

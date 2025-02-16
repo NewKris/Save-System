@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using VirtualDeviants.Saving;
+﻿using UnityEngine;
+using VirtualDeviants.Manual_Saving.Saving;
 
-namespace VirtualDeviants {
+namespace VirtualDeviants.Manual_Saving {
     public class Mock : MonoBehaviour, ISaveDataEndpoint {
         public DefaultSave defaultSave;
         public ScoreDisplay display;

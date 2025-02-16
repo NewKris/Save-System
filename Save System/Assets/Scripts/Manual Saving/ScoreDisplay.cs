@@ -1,8 +1,7 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
-namespace VirtualDeviants {
+namespace VirtualDeviants.Manual_Saving {
     public class ScoreDisplay : MonoBehaviour {
         private TextMeshProUGUI _text;
 

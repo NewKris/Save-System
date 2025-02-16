@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace VirtualDeviants.Saving.Snapshot {
+namespace VirtualDeviants.Manual_Saving.Saving.Snapshot {
     [Serializable]
     public class SnapshotTable {
         public List<SnapshotInfo> snapshots = new List<SnapshotInfo>();

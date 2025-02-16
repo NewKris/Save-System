@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using VirtualDeviants.Saving.Snapshot;
+using VirtualDeviants.Manual_Saving.Saving.Snapshot;
 
-namespace VirtualDeviants.Saving {
+namespace VirtualDeviants.Manual_Saving.Saving {
     public static class SaveSystem {
         public static async Task<SnapshotTable> SaveGame(Save save, string id) {
             string path = SaveSystemConfig.SAVE_FILE_PATH + id;
